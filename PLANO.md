@@ -1,10 +1,10 @@
 # PLANO — site da reportagem (TCC de Rebecca Crecci)
 
 > Documento de trabalho da Fase 0. Diz o que vai ser feito, com quais regras e em que ordem.
-> O README.md explica como editar e publicar depois de pronto.
+> O GUIA_TECNICO.md explica como editar e publicar depois de pronto.
 > Este é o plano original: o título atual é “Mulheres no Futebol”, as bibliotecas
 > agora são locais e os textos do Sobre e de Árbitras já foram concluídos.
-> Consulte o README para as pendências atuais e VERIFICACAO.md para os testes.
+> Consulte o GUIA_TECNICO.md para as pendências atuais e VERIFICACAO.md para os testes.
 
 ## 1. Conceito: "Noite de jogo, dia de leitura"
 
@@ -25,7 +25,7 @@ A primeira frase da própria reportagem amarra o conceito: *"O microfone na mão
 
 ### Conteúdo
 A pasta `reportagem/` traz o texto real (`REAL REPORTAGEM.md`). Ele entra em `conteudo.js` no lugar dos
-placeholders de história, com revisão leve de digitação (lista completa no README). Continuam como
+placeholders de história, com revisão leve de digitação (lista completa no GUIA_TECNICO.md). Continuam como
 PLACEHOLDER: título do TCC, fotos, áudios, intro da aba Árbitras e os créditos que não estão no texto
 (orientação, instituição, contato, agradecimentos, desenvolvimento).
 

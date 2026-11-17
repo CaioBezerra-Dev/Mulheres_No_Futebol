@@ -14,7 +14,7 @@ Comparação em Chrome, 390 × 844 px, DPR 3, CPU com redução de 4× e rede Fa
 
 São amostras de laboratório, não uma média de produção. A comparação ocorreu antes dos ajustes finais no crédito de desenvolvimento e nos feixes dos refletores. A remoção do preloader mede o momento em que a página é liberada; a coreografia da capa continua depois disso. A cena decorativa usa 30 Hz no toque, enquanto as transições mantêm a taxa da tela. O desenho de partículas usa menos pixels, e não há pré-carga dos objetos grandes em celulares ou economia de dados.
 
-**Não foi produzida uma nova nota Lighthouse.** A ferramenta de auditoria foi rejeitada pela política automática de aprovação do ambiente. As notas 87–89 no celular e 99–100 no desktop citadas no README pertencem à entrega anterior do Claude. Não houve teste em aparelho físico.
+**Não foi produzida uma nova nota Lighthouse.** A ferramenta de auditoria foi rejeitada pela política automática de aprovação do ambiente. As notas 87–89 no celular e 99–100 no desktop citadas no GUIA_TECNICO.md pertencem à entrega anterior do Claude. Não houve teste em aparelho físico.
 
 ## Verificações realizadas
 
@@ -43,4 +43,4 @@ Verificação geométrica sem navegador: 40 cenários, combinando 390 × 844, 76
 
 O título aprovado é **Mulheres no Futebol**. A apresentação do Sobre e a introdução de Árbitras foram redigidas com base na reportagem. Campos de créditos indefinidos ficam ocultos e podem ser preenchidos em `conteudo.js`. O ano de credenciamento de Edina foi corrigido para 2016, conforme o [cadastro da FIFA](https://inside.fifa.com/es/associations/BRA/referees); o arquivo original da reportagem foi preservado.
 
-Ainda dependem da autora: fotos e áudios reais, transcrições correspondentes, créditos restantes e confirmação da cronologia de Marianna Fraga indicada no README. Nenhuma hospedagem foi ativada. Depois da publicação, as metatags de imagem precisam receber a URL absoluta do domínio real.
+Ainda dependem da autora: fotos e áudios reais, transcrições correspondentes, créditos restantes e confirmação da cronologia de Marianna Fraga indicada no GUIA_TECNICO.md. Nenhuma hospedagem foi ativada durante esta revisão. Depois da publicação, as metatags de imagem precisam receber a URL absoluta do domínio real.
