@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="pt-BR" class="sem-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Mulheres no Futebol · Reportagem multimídia</title>
+  <meta name="description" content="Reportagem multimídia sobre mulheres no futebol masculino: jornalistas, árbitras e gestoras contam o preço de ocupar o campo, a cabine e a diretoria.">
+  <meta name="author" content="Rebecca Crecci">
+  <meta name="theme-color" content="#0A1F12">
+  <meta name="robots" content="index, follow">
+
+  <link rel="icon" href="assets/icones/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icones/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/icones/apple-touch-icon.png">
+
+  <!-- Compartilhamento. Depois de publicar, troque "assets/img/og-image.jpg" pelo endereço completo
+       (ex.: https://seu-site.netlify.app/assets/img/og-image.jpg) para funcionar em todas as redes. -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="Mulheres no Futebol">
+  <meta property="og:title" content="Mulheres no Futebol">
+  <meta property="og:description" content="Histórias reais de jornalistas, árbitras e gestoras que ocupam o futebol masculino no Brasil.">
+  <meta property="og:image" content="assets/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Mulheres no Futebol. Reportagem de Rebecca Crecci sobre jornalistas, árbitras e gestoras, com um estádio iluminado ao fundo.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mulheres no Futebol">
+  <meta name="twitter:description" content="Histórias reais de jornalistas, árbitras e gestoras que ocupam o futebol masculino no Brasil.">
+  <meta name="twitter:image" content="assets/img/og-image.jpg">
+
+  <link rel="preload" href="assets/fontes/bricolage-grotesque-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fontes/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="modulepreload" href="js/base.js">
+  <link rel="modulepreload" href="js/preloader.js">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/site.css">
+
+  <script>document.documentElement.classList.replace('sem-js', 'com-js');</script>
+
+  <!-- Versões fixas e locais: a abertura não depende de uma CDN. -->
+  <script defer src="js/vendor/gsap.min.js"></script>
+  <script defer src="js/vendor/ScrollTrigger.min.js"></script>
+  <script defer src="js/vendor/Flip.min.js"></script>
+  <script defer src="js/vendor/CustomEase.min.js"></script>
+  <script defer src="js/vendor/lenis.min.js"></script>
+  <script defer src="conteudo.js"></script>
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <a class="pular" href="#conteudo" data-pular>Pular para o conteúdo</a>
+
+  <!-- ================= PRELOADER ================= -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__refletores">
+      <svg class="preloader__banco" viewBox="0 0 120 64" data-refletor="0"><rect class="banco__moldura" x="1" y="1" width="118" height="62" rx="4"/><g class="banco__lampadas"></g></svg>
+      <svg class="preloader__banco" viewBox="0 0 120 64" data-refletor="1"><rect class="banco__moldura" x="1" y="1" width="118" height="62" rx="4"/><g class="banco__lampadas"></g></svg>
+      <svg class="preloader__banco" viewBox="0 0 120 64" data-refletor="2"><rect class="banco__moldura" x="1" y="1" width="118" height="62" rx="4"/><g class="banco__lampadas"></g></svg>
+      <svg class="preloader__banco" viewBox="0 0 120 64" data-refletor="3"><rect class="banco__moldura" x="1" y="1" width="118" height="62" rx="4"/><g class="banco__lampadas"></g></svg>
+    </div>
+    <p class="preloader__legenda" data-texto="interface.carregando">Acendendo os refletores</p>
+    <p class="preloader__contador"><span class="preloader__numero">0</span><span class="preloader__pct">%</span></p>
+    <div class="preloader__listras" aria-hidden="true"></div>
+  </div>
+
+  <!-- ================= TOPO ================= -->
+  <header class="topo" id="topo">
+    <a class="topo__marca" href="#" data-ir-capa><span class="topo__marca-texto" data-texto="site.titulo">Mulheres no Futebol</span></a>
+    <div class="topo__acoes">
+      <p class="topo__lidas" id="contador-lidas" aria-live="polite"></p>
+      <button class="botao-som" id="botao-som" type="button" aria-pressed="false">
+        <span class="botao-som__barras" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="sr-only" data-rotulo-som>Ligar som do estádio</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="conteudo" class="telas" tabindex="-1">
+
+    <!-- ================= CAPA ================= -->
+    <section class="tela tela--capa" id="tela-capa" data-tela="capa" aria-labelledby="capa-titulo">
+      <div class="cena" id="cena" aria-hidden="true">
+        <div class="cena__camada cena__ceu" data-prof="0.04">
+          <picture>
+            <source type="image/avif" srcset="assets/img/cena/ceu-noturno-1x.avif 1x, assets/img/cena/ceu-noturno-2x.avif 2x">
+            <img src="assets/img/cena/ceu-noturno-1x.webp" srcset="assets/img/cena/ceu-noturno-2x.webp 2x" alt="" width="960" height="540" fetchpriority="high">
+          </picture>
+          <div class="cena__estrelas"></div>
+        </div>
+
+        <div class="cena__camada cena__refletores" data-prof="0.08">
+          <div class="refletor refletor--1" data-refletor="0"><picture><source type="image/avif" srcset="assets/img/cena/torre-refletor-1x.avif 1x, assets/img/cena/torre-refletor-2x.avif 2x"><img class="refletor__torre" src="assets/img/cena/torre-refletor-1x.webp" srcset="assets/img/cena/torre-refletor-2x.webp 2x" alt="" width="170" height="516" decoding="async"></picture><span class="refletor__brilho"></span></div>
+          <div class="refletor refletor--2" data-refletor="1"><picture><source type="image/avif" srcset="assets/img/cena/torre-refletor-1x.avif 1x, assets/img/cena/torre-refletor-2x.avif 2x"><img class="refletor__torre" src="assets/img/cena/torre-refletor-1x.webp" srcset="assets/img/cena/torre-refletor-2x.webp 2x" alt="" width="170" height="516" decoding="async"></picture><span class="refletor__brilho"></span></div>
+          <div class="refletor refletor--3" data-refletor="2"><picture><source type="image/avif" srcset="assets/img/cena/torre-refletor-1x.avif 1x, assets/img/cena/torre-refletor-2x.avif 2x"><img class="refletor__torre" src="assets/img/cena/torre-refletor-1x.webp" srcset="assets/img/cena/torre-refletor-2x.webp 2x" alt="" width="170" height="516" decoding="async"></picture><span class="refletor__brilho"></span></div>
+          <div class="refletor refletor--4" data-refletor="3"><picture><source type="image/avif" srcset="assets/img/cena/torre-refletor-1x.avif 1x, assets/img/cena/torre-refletor-2x.avif 2x"><img class="refletor__torre" src="assets/img/cena/torre-refletor-1x.webp" srcset="assets/img/cena/torre-refletor-2x.webp 2x" alt="" width="170" height="516" decoding="async"></picture><span class="refletor__brilho"></span></div>
+        </div>
+
+        <div class="cena__camada cena__arquibancada" data-prof="0.12">
+          <div class="arquibancada">
+            <div class="arquibancada__estrutura"></div>
+            <div class="torcida torcida--1" data-anel="1"></div>
+            <div class="torcida torcida--2" data-anel="2"></div>
+            <div class="torcida torcida--3" data-anel="3"></div>
+            <div class="arquibancada__bandeiras"></div>
+          </div>
+        </div>
+
+        <div class="cena__camada cena__gramado" data-prof="0.2">
+          <picture>
+            <source media="(max-aspect-ratio: 4/5)" type="image/avif" srcset="assets/img/cena/gramado-movel-1x.avif 1x, assets/img/cena/gramado-movel-2x.avif 2x">
+            <source media="(max-aspect-ratio: 4/5)" type="image/webp" srcset="assets/img/cena/gramado-movel-1x.webp 1x, assets/img/cena/gramado-movel-2x.webp 2x">
+            <source type="image/avif" srcset="assets/img/cena/gramado-listrado-1x.avif 1x, assets/img/cena/gramado-listrado-2x.avif 2x">
+            <img class="gramado__img" src="assets/img/cena/gramado-listrado-1x.webp" srcset="assets/img/cena/gramado-listrado-2x.webp 2x" alt="" width="960" height="313" fetchpriority="high">
+          </picture>
+          <div class="gramado__luz"></div>
+          <div class="bola" id="bola"><div class="bola__sombra"></div><div class="bola__corpo"><img src="assets/img/objetos/bola-1x.webp" srcset="assets/img/objetos/bola-2x.webp 2x" alt="" width="80" height="82" decoding="async"></div></div>
+        </div>
+
+        <div class="cena__camada cena__feixes" data-prof="0.08">
+          <span class="feixe" data-refletor="0"></span><span class="feixe" data-refletor="1"></span><span class="feixe" data-refletor="2"></span><span class="feixe" data-refletor="3"></span>
+        </div>
+
+        <canvas class="cena__particulas" id="particulas"></canvas>
+
+        <div class="cena__camada cena__frente" data-prof="0.42">
+          <picture class="frente frente--esq">
+            <source type="image/avif" srcset="assets/img/cena/torcida-frente-esquerda-1x.avif 418w, assets/img/cena/torcida-frente-esquerda-2x.avif 836w" sizes="(max-aspect-ratio: 4/5) 37vw, 30vh">
+            <img src="assets/img/cena/torcida-frente-esquerda-1x.webp" srcset="assets/img/cena/torcida-frente-esquerda-1x.webp 418w, assets/img/cena/torcida-frente-esquerda-2x.webp 836w" sizes="(max-aspect-ratio: 4/5) 37vw, 30vh" alt="" width="418" height="221" decoding="async">
+          </picture>
+          <picture class="frente frente--dir">
+            <source type="image/avif" srcset="assets/img/cena/torcida-frente-direita-1x.avif 418w, assets/img/cena/torcida-frente-direita-2x.avif 836w" sizes="(max-aspect-ratio: 4/5) 37vw, 30vh">
+            <img src="assets/img/cena/torcida-frente-direita-1x.webp" srcset="assets/img/cena/torcida-frente-direita-1x.webp 418w, assets/img/cena/torcida-frente-direita-2x.webp 836w" sizes="(max-aspect-ratio: 4/5) 37vw, 30vh" alt="" width="418" height="221" decoding="async">
+          </picture>
+        </div>
+        <div class="cena__vinheta"></div>
+        <div class="cena__grao"></div>
+      </div>
+
+      <div class="capa__texto">
+        <p class="capa__kicker" data-texto="site.kicker">Reportagem multimídia</p>
+        <h1 class="capa__titulo" id="capa-titulo" data-texto="site.titulo">Mulheres no Futebol</h1>
+        <div class="capa__apoio">
+          <p class="capa__subtitulo" data-texto="site.subtitulo">Histórias reais de jornalistas, árbitras e gestoras que ocupam o futebol masculino no Brasil.</p>
+          <p class="capa__instrucao capa__instrucao--topo" aria-hidden="true"><span class="capa__pulso"></span><span data-instrucao>Toque nos objetos</span></p>
+        </div>
+      </div>
+
+      <div class="capa__objetos" data-prof="0.3">
+        <ul class="objetos" role="list">
+          <li class="objeto-item objeto-item--microfone">
+            <a class="objeto" data-objeto="microfone" href="#jornalistas">
+              <span class="objeto__mag">
+                <span class="objeto__halo"></span>
+                <span class="objeto__flut">
+                  <picture>
+                    <source type="image/avif" srcset="assets/img/objetos/microfone-1x.avif 241w, assets/img/objetos/microfone-2x.avif 482w" sizes="(max-aspect-ratio: 4/5) 21vw, 12vw">
+                    <img class="objeto__img" src="assets/img/objetos/microfone-1x.webp" srcset="assets/img/objetos/microfone-1x.webp 241w, assets/img/objetos/microfone-2x.webp 482w" sizes="(max-aspect-ratio: 4/5) 21vw, 12vw" alt="" width="241" height="480" decoding="async" fetchpriority="high">
+                  </picture>
+                </span>
+              </span>
+              <span class="objeto__rotulo"><span class="objeto__nome"></span><span class="objeto__qtd"></span></span>
+            </a>
+          </li>
+          <li class="objeto-item objeto-item--apito">
+            <a class="objeto" data-objeto="apito" href="#arbitras">
+              <span class="objeto__mag">
+                <span class="objeto__halo"></span>
+                <span class="objeto__flut">
+                  <picture>
+                    <source type="image/avif" srcset="assets/img/objetos/apito-1x.avif 480w, assets/img/objetos/apito-2x.avif 960w" sizes="(max-aspect-ratio: 4/5) 35vw, 21vw">
+                    <img class="objeto__img" src="assets/img/objetos/apito-1x.webp" srcset="assets/img/objetos/apito-1x.webp 480w, assets/img/objetos/apito-2x.webp 960w" sizes="(max-aspect-ratio: 4/5) 35vw, 21vw" alt="" width="480" height="471" decoding="async" fetchpriority="high">
+                  </picture>
+                </span>
+              </span>
+              <span class="objeto__rotulo"><span class="objeto__nome"></span><span class="objeto__qtd"></span></span>
+            </a>
+          </li>
+          <li class="objeto-item objeto-item--caderneta">
+            <a class="objeto" data-objeto="caderneta" href="#gestoras">
+              <span class="objeto__mag">
+                <span class="objeto__halo"></span>
+                <span class="objeto__flut">
+                  <picture>
+                    <source type="image/avif" srcset="assets/img/objetos/caderneta-1x.avif 442w, assets/img/objetos/caderneta-2x.avif 883w" sizes="(max-aspect-ratio: 4/5) 33vw, 20vw">
+                    <img class="objeto__img" src="assets/img/objetos/caderneta-1x.webp" srcset="assets/img/objetos/caderneta-1x.webp 442w, assets/img/objetos/caderneta-2x.webp 883w" sizes="(max-aspect-ratio: 4/5) 33vw, 20vw" alt="" width="442" height="480" decoding="async" fetchpriority="high">
+                  </picture>
+                </span>
+              </span>
+              <span class="objeto__rotulo"><span class="objeto__nome"></span><span class="objeto__qtd"></span></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="capa__rodape">
+        <a class="link-discreto" href="#sobre" data-texto="interface.sobre">Sobre o projeto</a>
+        <p class="capa__instrucao"><span class="capa__pulso" aria-hidden="true"></span><span data-instrucao>Encoste nos objetos</span></p>
+        <a class="link-discreto capa__abertura" href="#abertura" data-texto="site.linkAbertura">ou comece pela abertura</a>
+      </div>
+
+      <p class="capa__gol" id="gol" aria-hidden="true"></p>
+    </section>
+  </main>
+
+  <!-- ================= DOCK (troca de aba) ================= -->
+  <nav class="dock" id="dock" aria-label="Trocar de categoria"></nav>
+
+  <!-- ================= CAMADAS DE TRANSIÇÃO / EFEITOS ================= -->
+  <div class="transicao" id="transicao" aria-hidden="true">
+    <div class="transicao__circulo"></div>
+    <div class="transicao__listras"></div>
+  </div>
+  <canvas class="confete" id="confete" aria-hidden="true"></canvas>
+  <div class="cursor" id="cursor" aria-hidden="true"><div class="cursor__anel"></div><div class="cursor__ponto"></div><span class="cursor__rotulo"></span></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <p class="sr-only" id="anuncio" aria-live="polite" aria-atomic="true"></p>
+
+  <noscript>
+    <div class="noscript">
+      <p>Este site precisa de JavaScript para funcionar. Ative o JavaScript no navegador para ler as histórias.</p>
+    </div>
+  </noscript>
+</body>
+</html>

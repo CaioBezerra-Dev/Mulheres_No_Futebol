@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Impedimento! · Mulheres no Futebol</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0E4D24">
+  <script>
+    // No GitHub Pages de projeto (usuario.github.io/repositorio/) o site não fica na raiz do domínio:
+    // descobre a pasta para que estilos, imagens e o botão de volta funcionem em qualquer endereço.
+    (function () {
+      var base = '/';
+      if (/\.github\.io$/.test(location.hostname)) {
+        var pasta = location.pathname.split('/')[1];
+        if (pasta) base = '/' + pasta + '/';
+      }
+      document.write('<base href="' + base + '">');
+    })();
+  </script>
+  <link rel="icon" href="assets/icones/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/site.css">
+  <style>
+    .erro__bandeira img { transform-origin: 12% 92%; animation: bandeirar 0.42s ease-in-out infinite alternate; }
+    @keyframes bandeirar { from { transform: rotate(-5deg); } to { transform: rotate(7deg); } }
+    .erro .botao { gap: 0.6em; }
+    @media (prefers-reduced-motion: reduce) { .erro__bandeira img { animation: none; } }
+  </style>
+</head>
+<body>
+  <main class="tela tela--erro" aria-labelledby="titulo-404">
+    <div class="erro">
+      <div class="erro__bandeira" aria-hidden="true">
+        <picture>
+          <source type="image/avif" srcset="assets/img/objetos/bandeira-1x.avif 1x, assets/img/objetos/bandeira-2x.avif 2x">
+          <img src="assets/img/objetos/bandeira-1x.webp" srcset="assets/img/objetos/bandeira-2x.webp 2x" alt="" width="480" height="465">
+        </picture>
+      </div>
+      <p class="erro__kicker">Erro 404</p>
+      <h1 class="erro__titulo" id="titulo-404">Impedimento!</h1>
+      <p class="erro__texto">Esta página está em posição irregular. O lance foi anulado, mas o jogo continua.</p>
+      <a class="botao botao--primario" href="./">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H5m6-6-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Voltar para a capa</span>
+      </a>
+    </div>
+  </main>
+</body>
+</html>

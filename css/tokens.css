@@ -1,0 +1,139 @@
+/* ==========================================================================
+   TOKENS — o sistema de design inteiro mora aqui.
+   Cores, fontes, tamanhos, espaços, curvas e durações. Tudo o mais usa isto.
+   ========================================================================== */
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("../assets/fontes/bricolage-grotesque-var.woff2") format("woff2");
+  font-weight: 700 800;
+  font-stretch: 75% 88%;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("../assets/fontes/source-serif-4-var.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("../assets/fontes/source-serif-4-italic-var.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("../assets/fontes/inter-var.woff2") format("woff2");
+  font-weight: 400 750;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* ---------- Cores ---------- */
+  --verde: #1F7A3A;          /* gramado */
+  --verde-escuro: #0E4D24;   /* listra escura */
+  --verde-claro: #7BC96F;    /* só sobre fundo escuro */
+  --branco: #FFFFFF;
+  --gelo: #F4F8F1;           /* papel */
+  --noite: #0A1F12;          /* preto-esverdeado */
+  --cartao: #FFD23F;         /* acento único: interação e destaque */
+
+  --tinta: var(--noite);                 /* texto principal no claro (16:1) */
+  --tinta-suave: #44584A;                /* texto secundário no claro (6,6:1 no gelo) */
+  --linha: rgba(10, 31, 18, 0.14);       /* fios e divisórias no claro */
+  --luz: var(--branco);                  /* texto no escuro */
+  --luz-suave: rgba(244, 248, 241, 0.74);/* texto secundário no escuro (8:1) */
+  --linha-escura: rgba(244, 248, 241, 0.16);
+
+  /* ---------- Famílias ---------- */
+  --f-titulo: "Bricolage Grotesque", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  /* a serifa de leitura entra logo após a primeira pintura (classe .fontes-leitura no <html>),
+     fora do caminho crítico; até lá, Georgia segura o lugar por baixo do preloader */
+  --f-leitura: Georgia, "Times New Roman", serif;
+  --f-ui: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* ---------- Escala tipográfica (fluida) ---------- */
+  --t-mega: clamp(4.25rem, 17.5vw, 15.5rem);   /* título da capa */
+  --t-giga: clamp(3.4rem, 13vw, 12rem);        /* título das abas */
+  --t-h1: clamp(2.6rem, 6.4vw, 6.25rem);       /* título da história */
+  --t-h2: clamp(1.75rem, 3.4vw, 3rem);
+  --t-h3: clamp(1.25rem, 1.9vw, 1.6rem);
+  --t-olho: clamp(1.7rem, 3.6vw, 3.1rem);      /* pull quote */
+  --t-intro: clamp(1.2rem, 1.05rem + 0.55vw, 1.55rem);
+  --t-corpo: clamp(1.125rem, 1.06rem + 0.3vw, 1.3125rem);
+  --t-ui: 0.9375rem;
+  --t-mini: 0.75rem;
+
+  --lh-titulo: 0.84;
+  --lh-corpo: 1.66;
+  --tracking-kicker: 0.16em;
+
+  /* ---------- Espaços (base 4px) ---------- */
+  --e-1: 4px;
+  --e-2: 8px;
+  --e-3: 12px;
+  --e-4: 16px;
+  --e-5: 24px;
+  --e-6: 32px;
+  --e-7: 48px;
+  --e-8: 64px;
+  --e-9: 96px;
+  --e-10: 128px;
+  --margem: clamp(20px, 5vw, 72px);
+  --coluna-leitura: 65ch;
+  --largura-max: 1440px;
+
+  /* ---------- Formas ---------- */
+  --raio-p: 6px;
+  --raio-m: 14px;
+  --raio-pilula: 999px;
+  --sombra-card: 0 1px 2px rgba(10, 31, 18, 0.06), 0 12px 32px -12px rgba(10, 31, 18, 0.22);
+  --sombra-card-alta: 0 2px 4px rgba(10, 31, 18, 0.08), 0 32px 64px -20px rgba(10, 31, 18, 0.38);
+
+  /* ---------- Movimento (espelhado em js/base.js) ---------- */
+  --ease-saida: cubic-bezier(0.16, 1, 0.3, 1);      /* expo.out   */
+  --ease-troca: cubic-bezier(0.87, 0, 0.13, 1);     /* expo.inOut */
+  --ease-suave: cubic-bezier(0.25, 1, 0.5, 1);      /* power4.out */
+  --ease-antecipa: cubic-bezier(0.55, 0, 1, 0.45);  /* power2.in  */
+  --ease-passa: cubic-bezier(0.34, 1.56, 0.64, 1);  /* back.out   */
+  --d-xs: 0.15s;
+  --d-p: 0.3s;
+  --d-m: 0.6s;
+  --d-g: 0.9s;
+  --d-xg: 1.4s;
+
+  /* ---------- Camadas ---------- */
+  --z-cena: 0;
+  --z-tela: 10;
+  --z-topo: 50;
+  --z-dock: 55;
+  --z-transicao: 80;
+  --z-ator: 85;
+  --z-toast: 88;
+  --z-cursor: 90;
+  --z-preloader: 100;
+
+  --foco: 0 0 0 3px var(--noite), 0 0 0 6px var(--cartao);
+  --foco-escuro: 0 0 0 3px var(--cartao), 0 0 0 6px var(--noite);
+
+  --altura-topo: 64px;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+}
+
+html.fontes-leitura { --f-leitura: "Source Serif 4", Georgia, "Times New Roman", serif; }
+html.sem-js { --f-leitura: "Source Serif 4", Georgia, "Times New Roman", serif; }
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --d-xs: 0.01s;
+    --d-p: 0.2s;
+    --d-m: 0.25s;
+    --d-g: 0.3s;
+    --d-xg: 0.3s;
+  }
+}

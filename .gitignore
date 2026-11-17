@@ -1,0 +1,24 @@
+# Arquivos de trabalho; o site usa apenas as versões otimizadas.
+assets/originais/
+assets/fontes/originais/
+
+# Estado local e dependências de ferramentas.
+.agents
+.codex
+.aws
+.claude
+.ai-memory*
+node_modules/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+Thumbs.db
+
+# Relatórios, capturas e pacotes gerados.
+qa/
+dist/
+*.bundle
+*.zip
+*.trace.json*
