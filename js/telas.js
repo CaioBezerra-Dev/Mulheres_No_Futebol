@@ -3,7 +3,7 @@
    a partir do conteudo.js e sabe montar/desmontar seus efeitos.
    ============================================================================= */
 import {
-  C, $, $$, EASE, DUR, STAGGER, t, esc, deHTML, imagem, objetoPicture, ehFotoProvisoria,
+  C, $, $$, EASE, DUR, STAGGER, t, esc, deHTML, imagem, objetoPicture, ehFotoProvisoria, TAMANHOS, infoFoto, tamanhosMoldura,
   categoria, historia, historiasDa, indiceCategoria, qtdHistorias, tempoLeitura,
   proximaHistoria, sugestoes, estado, dividirLinhas, movimentoReduzido, ehToque, toast, categorias,
 } from './base.js';
@@ -46,7 +46,15 @@ export function renderizarTexto(paragrafos, { capitular = true } = {}) {
       return `<figure class="olho${fala ? ' olho--fala' : ''}"><blockquote class="olho__texto"><p>${esc(texto)}</p></blockquote>${autoria ? `<figcaption class="olho__autoria">${esc(autoria)}</figcaption>` : ''}</figure>`;
     }
     if (b.tipo === 'foto') {
-      return `<figure class="foto-texto">${imagem(b.partes[0], { alt: b.partes[1] || '' })}${b.partes[1] ? `<figcaption>${esc(b.partes[1])}</figcaption>` : ''}</figure>`;
+      // [[foto:caminho|legenda|crédito]]: fotos em pé ficam centralizadas e limitadas pela altura da tela
+      const [src, legenda = '', credito = ''] = b.partes;
+      const info = infoFoto(src);
+      const emPe = !!info && info.a > info.l * 1.05;
+      const estilo = emPe ? ` style="--proporcao:${(info.l / info.a).toFixed(4)}"` : '';
+      const legendaHTML = legenda || credito
+        ? `<figcaption>${esc(legenda)}${credito ? `<span class="foto-texto__credito">${esc(credito)}</span>` : ''}</figcaption>`
+        : '';
+      return `<figure class="foto-texto${emPe ? ' foto-texto--em-pe' : ''}"${estilo}>${imagem(src, { alt: legenda, tamanhos: emPe ? TAMANHOS.textoVertical : TAMANHOS.texto })}${legendaHTML}</figure>`;
     }
     const s = b.s;
     if (s.startsWith('## ')) return `<h2 class="intertitulo">${esc(s.slice(3))}</h2>`;
@@ -160,7 +168,7 @@ function cardHTML(h, i, lida) {
     <a class="card${lida ? ' is-lida' : ''}" href="#historia/${esc(h.id)}" data-historia="${esc(h.id)}" data-cursor="${esc(t('lerHistoria'))}" aria-label="${esc(rotulo)}">
       <span class="card__num" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>
       <span class="card__fig" data-flip-foto>
-        ${imagem(h.foto, { alt: '', classe: 'card__img', estilo: `object-position:${h.fotoPosicao || '50% 30%'}` })}
+        ${imagem(h.foto, { alt: '', classe: 'card__img', estilo: `object-position:${h.fotoPosicao || '50% 30%'}`, tamanhos: tamanhosMoldura(h.foto, 'card') })}
         <span class="card__brilho" aria-hidden="true"></span>
       </span>
       <span class="card__corpo">
@@ -267,7 +275,7 @@ function telaCategoria(id) {
 function sugestaoHTML(s) {
   const cat = categoria(s.categoria);
   return `<li><a class="sugestao" href="#historia/${esc(s.id)}" data-historia="${esc(s.id)}" data-cursor="${esc(t('lerHistoria'))}">
-    <span class="sugestao__foto">${imagem(s.foto, { alt: '', estilo: `object-position:${s.fotoPosicao || '50% 30%'}` })}</span>
+    <span class="sugestao__foto">${imagem(s.foto, { alt: '', estilo: `object-position:${s.fotoPosicao || '50% 30%'}`, tamanhos: TAMANHOS.miniatura })}</span>
     <span class="sugestao__textos">
       <span class="sugestao__cat">${esc(cat?.nome || '')}</span>
       <span class="sugestao__nome">${esc(s.nome)}</span>
@@ -304,7 +312,7 @@ function telaHistoria(id) {
         <button class="historia__rolar" type="button" data-rolar-texto><span class="historia__rolar-linha" aria-hidden="true"></span><span>Role para ler</span></button>
       </div>
       <figure class="historia__foto">
-        <span class="historia__moldura" data-flip-foto>${imagem(h.foto, { alt: h.fotoAlt || `Foto de ${h.nome}`, classe: 'historia__img', lazy: false, prioridade: 'high', estilo: `object-position:${pos}` })}</span>
+        <span class="historia__moldura" data-flip-foto>${imagem(h.foto, { alt: h.fotoAlt || `Foto de ${h.nome}`, classe: 'historia__img', lazy: false, prioridade: 'high', estilo: `object-position:${pos}`, tamanhos: tamanhosMoldura(h.foto, 'hero') })}</span>
         ${provisoria ? `<figcaption class="historia__legenda-foto">${esc(t('fotoProvisoria', { nome: h.nome }))}</figcaption>` : (h.fotoCredito ? `<figcaption class="historia__legenda-foto">${esc(h.fotoCredito)}</figcaption>` : '')}
       </figure>
     </header>

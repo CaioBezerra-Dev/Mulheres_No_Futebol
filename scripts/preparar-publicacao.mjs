@@ -6,7 +6,7 @@ import path from 'node:path';
 
 const raiz = fileURLToPath(new URL('../', import.meta.url));
 const destino = path.join(raiz, 'dist');
-const arquivos = ['index.html', '404.html', 'conteudo.js', 'robots.txt', '.nojekyll', 'css', 'js', 'assets'];
+const arquivos = ['index.html', '404.html', 'conteudo.js', 'robots.txt', '.nojekyll', 'vercel.json', 'css', 'js', 'assets'];
 
 await rm(destino, { recursive: true, force: true });
 await mkdir(destino, { recursive: true });

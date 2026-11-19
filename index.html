@@ -19,14 +19,14 @@
   <meta property="og:locale" content="pt_BR">
   <meta property="og:site_name" content="Mulheres no Futebol">
   <meta property="og:title" content="Mulheres no Futebol">
-  <meta property="og:description" content="Histórias reais de jornalistas, árbitras e gestoras que ocupam o futebol masculino no Brasil.">
+  <meta property="og:description" content="Histórias reais de jornalistas, árbitras e gestoras que marcam presença no futebol masculino no Brasil.">
   <meta property="og:image" content="assets/img/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Mulheres no Futebol. Reportagem de Rebecca Crecci sobre jornalistas, árbitras e gestoras, com um estádio iluminado ao fundo.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Mulheres no Futebol">
-  <meta name="twitter:description" content="Histórias reais de jornalistas, árbitras e gestoras que ocupam o futebol masculino no Brasil.">
+  <meta name="twitter:description" content="Histórias reais de jornalistas, árbitras e gestoras que marcam presença no futebol masculino no Brasil.">
   <meta name="twitter:image" content="assets/img/og-image.jpg">
 
   <link rel="preload" href="assets/fontes/bricolage-grotesque-var.woff2" as="font" type="font/woff2" crossorigin>
@@ -70,7 +70,12 @@
     <div class="topo__acoes">
       <p class="topo__lidas" id="contador-lidas" aria-live="polite"></p>
       <button class="botao-som" id="botao-som" type="button" aria-pressed="false">
-        <span class="botao-som__barras" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <svg class="botao-som__icone" viewBox="0 0 24 24" aria-hidden="true">
+          <path class="botao-som__alto" d="M3.5 9.3h3.4l4.6-4v13.4l-4.6-4H3.5z"/>
+          <path class="botao-som__onda" d="M15.2 9.2a4 4 0 0 1 0 5.6"/>
+          <path class="botao-som__onda botao-som__onda--2" d="M17.9 6.5a7.8 7.8 0 0 1 0 11"/>
+          <path class="botao-som__mudo" d="m15.6 9.6 4.8 4.8m0-4.8-4.8 4.8"/>
+        </svg>
         <span class="sr-only" data-rotulo-som>Ligar som do estádio</span>
       </button>
     </div>
@@ -137,11 +142,16 @@
         <div class="cena__grao"></div>
       </div>
 
+      <nav class="capa__nav" aria-label="Atalhos da reportagem" data-rotulo="interface.atalhosCapa">
+        <a class="capa__nav-link" href="#abertura" data-texto="site.linkAbertura">Abertura</a>
+        <a class="capa__nav-link" href="#sobre" data-texto="interface.sobre">Sobre o projeto</a>
+      </nav>
+
       <div class="capa__texto">
         <p class="capa__kicker" data-texto="site.kicker">Reportagem multimídia</p>
         <h1 class="capa__titulo" id="capa-titulo" data-texto="site.titulo">Mulheres no Futebol</h1>
         <div class="capa__apoio">
-          <p class="capa__subtitulo" data-texto="site.subtitulo">Histórias reais de jornalistas, árbitras e gestoras que ocupam o futebol masculino no Brasil.</p>
+          <p class="capa__subtitulo" data-texto="site.subtitulo">Histórias reais de jornalistas, árbitras e gestoras que marcam presença no futebol masculino no Brasil.</p>
           <p class="capa__instrucao capa__instrucao--topo" aria-hidden="true"><span class="capa__pulso"></span><span data-instrucao>Toque nos objetos</span></p>
         </div>
       </div>
@@ -194,9 +204,7 @@
       </div>
 
       <div class="capa__rodape">
-        <a class="link-discreto" href="#sobre" data-texto="interface.sobre">Sobre o projeto</a>
         <p class="capa__instrucao"><span class="capa__pulso" aria-hidden="true"></span><span data-instrucao>Encoste nos objetos</span></p>
-        <a class="link-discreto capa__abertura" href="#abertura" data-texto="site.linkAbertura">ou comece pela abertura</a>
       </div>
 
       <p class="capa__gol" id="gol" aria-hidden="true"></p>

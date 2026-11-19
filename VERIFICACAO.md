@@ -1,3 +1,34 @@
+# Verificação — 19/11/2026: fotos, áudios e ajustes da capa
+
+## O que mudou
+- 21 fotos reais em 6 histórias (foto principal + fotos no meio do texto) e 6 trechos de áudio. Marianna Fraga segue com a ilustração (fotos não enviadas); Cassia França ficou sem player (áudio não enviado).
+- Atalhos “Abertura · Sobre o projeto” no alto da capa; botão de som com ícone de alto-falante (X quando desligado, ondas quando ligado); subtítulo “…que marcam presença no futebol masculino no Brasil.”, também nas metatags.
+- Player: não depende do som do estádio; nada é baixado antes do play; clicar na onda toca a partir do ponto escolhido; falhas aparecem na tela.
+- Removidos o áudio demonstrativo e as 6 ilustrações substituídas (2,2 MB).
+
+## Verificações realizadas (Chrome headless, sem usar o navegador da pessoa)
+- **Áudio com o som do estádio desligado:** botão de play e clique na onda tocam (`paused: false`, tempo avançando). O áudio usa `nana-ednet.webm`, e o botão de som segue `aria-pressed="false"`. Antes do play, `preload="none"` e nenhum byte do áudio baixado.
+- **Clique no meio da onda:** com servidor que aceita `Range` (como a Vercel), a reprodução começou em 17,4 s de 34,7 s. Com o `http.server` do Python, que não aceita `Range`, recomeça do início; a limitação é do servidor local.
+- **Fluxo completo com cliques reais:** capa → apito → card de Edina (transição) → história → play → “Voltar às histórias” (selo “Lida”) → capa → “Sobre o projeto” → capa → “Abertura”. Sem erros de console.
+- **As 7 histórias em celular (390 px, densidade 3), rolando até o fim:** nenhuma imagem quebrada e nenhuma pendente; nenhum erro de console. O navegador escolheu as versões de 800 px (densidade efetiva ~2,3×). Em computador 2×, escolheu as de 1080 px.
+- **Arquivos:** os 12 arquivos de áudio decodificam sem erro no ffmpeg. O AAC tem o índice no início (`faststart`), e a Nana passou de −25,7 para −17,2 LUFS. O manifesto `js/midia.js` confere com os arquivos gerados (0 ausentes, 0 sobrando). `node --check` em todos os módulos e `vercel.json` válido.
+
+## Peso da visita (laboratório, textos estimados com Brotli como a Vercel entrega)
+| Visita | Antes | Depois |
+| --- | ---: | ---: |
+| Capa, computador | ~944 KB¹ | 528 KB |
+| Capa, celular 3× | 645 KB | 650 KB |
+| História de Carla no celular, rolando até o fim | 1.007 KB (ilustrações) | 1.049 KB (com 5 fotos reais) |
+
+¹ 523 KB medidos + 421 KB das três versões grandes dos objetos em WebP, que a versão anterior baixava em segundo plano em computadores com mouse. O Chrome headless se apresenta como tela de toque, então essa parte foi somada pelos tamanhos dos arquivos, não medida.
+
+Fotos e áudios só são baixados quando a leitura chega perto deles ou no play. Antes de otimizar, as 21 fotos somavam 17 MB e os 6 áudios 1,1 MB. Todas as versões das fotos somam 4,8 MB, e cada foto sai entre 10 e 165 KB na versão usada no celular. Os áudios (Opus + reserva AAC) somam 1,7 MB, mas cada pessoa baixa só um formato, e só ao dar play.
+
+## Limites
+Não houve teste no Safari, em iPhone ou em aparelho físico. A reserva em AAC existe para navegadores sem Opus, mas não foi exercitada num navegador real sem WebM. Nenhuma nota Lighthouse nova foi gerada. As transcrições vieram de reconhecimento de fala e precisam da escuta da autora (pontos listados no GUIA_TECNICO.md).
+
+---
+
 # Verificação da continuidade — 17/11/2026
 
 ## Carregamento no celular

@@ -77,6 +77,10 @@ async function iniciar() {
     const v = caminho(C, el.dataset.texto);
     if (typeof v === 'string') el.textContent = v;
   });
+  $$('[data-rotulo]').forEach(el => {
+    const v = caminho(C, el.dataset.rotulo);
+    if (typeof v === 'string') el.setAttribute('aria-label', v);
+  });
   $('.topo__marca').setAttribute('aria-label', `${C.site.titulo}: ${t('voltarCapa')}`);
   dock.setAttribute('aria-label', t('trocarCategoria'));
 
@@ -276,11 +280,17 @@ async function iniciar() {
   ScrollTrigger.refresh();
   html.classList.add('pronto');
 
-  // Transições no computador podem usar os objetos maiores. No celular e em
-  // economia de dados, só baixamos essas versões se a pessoa navegar até elas.
-  if (!ehToque() && !navigator.connection?.saveData) {
-    const ocioso = window.requestIdleCallback || (fn => setTimeout(fn, 1200));
-    ocioso(() => categorias().forEach(c => carregarImagem(`assets/img/objetos/${c.objeto}-2x.webp`)));
+  // A transição usa a versão maior do objeto. Ela só é baixada quando a pessoa mira
+  // aquele objeto (mouse por cima ou foco do teclado), e não para os três em toda visita.
+  if (!navigator.connection?.saveData) {
+    const pedidos = new Set();
+    const preparar = e => {
+      const o = e.target.closest?.('.objeto');
+      const src = o && TR.srcObjeto2x(o.dataset.objeto, o.querySelector('.objeto__img')?.currentSrc);
+      if (src && !pedidos.has(src)) { pedidos.add(src); carregarImagem(src); }
+    };
+    capa.el.addEventListener('pointerover', preparar);
+    capa.el.addEventListener('focusin', preparar);
   }
 }
 
