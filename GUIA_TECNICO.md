@@ -14,6 +14,8 @@ python3 -m http.server 8765 --bind 127.0.0.1
 # Acesse http://localhost:8765
 ```
 
+O servidor do Python não aceita pedidos parciais (`Range`). Localmente, os áudios tocam, mas clicar no meio da onda recomeça do início. Na Vercel, e em servidores que aceitam `Range`, o player pula para o ponto clicado.
+
 ## Como trocar textos, fotos e áudios
 
 Tudo que aparece escrito no site está em **`conteudo.js`**. Edite só o que está entre aspas.
@@ -21,17 +23,47 @@ Tudo que aparece escrito no site está em **`conteudo.js`**. Edite só o que est
 - **Título:** “Mulheres no Futebol”, definido para esta versão. Para trocar, edite `site.titulo` em `conteudo.js`, as metatags de título no `index.html` e o título de `404.html`. O título da capa se ajusta sozinho ao tamanho.
 - **Histórias:** cada uma tem `nome`, `funcao`, `titulo`, `destaque` (frase do card) e `texto` (lista de parágrafos). Parágrafo que começa com “ vira fala.
 - **Marcadores no texto:**
-  - `[[audio:arquivo.mp3|legenda|transcrição]]` insere o player (o arquivo vai em `assets/audio/`; a transcrição é opcional).
+  - `[[audio:carla-pessoa|legenda|transcrição]]` insere o player. Sem extensão, usa os arquivos otimizados `assets/audio/carla-pessoa.webm` e `.m4a`. A transcrição é opcional e aparece em “Ler transcrição”.
   - `[[olho:frase|quem disse]]` insere uma frase em destaque.
-  - `[[foto:assets/fotos/x.jpg|legenda]]` insere uma foto no meio do texto.
+  - `[[foto:assets/fotos/carla-pessoa/infancia|legenda|crédito]]` insere uma foto no meio do texto. O crédito é opcional e aparece sob a legenda. Fotos em pé ficam centralizadas e limitadas pela altura da tela.
   - `## Intertítulo` insere um subtítulo.
-- **Fotos:** troque só o campo `foto` da história, por exemplo `"assets/fotos/edina.jpg"`. Ajuste `fotoAlt` (descrição para leitores de tela) e, se precisar, `fotoPosicao` (`"50% 30%"` = ponto da foto que fica no corte). Fotos de até ~1600 px de largura, em JPG ou WebP, deixam o site leve.
-- **Áudios:** coloque o MP3 em `assets/audio/` e use o nome no marcador. Hoje todas as histórias usam `exemplo-entrevista.mp3`, um áudio sintetizado identificado como demonstrativo no player. Os trechos de fala disponíveis aparecem como “Ler trecho da entrevista”; quando o arquivo real for usado, o rótulo passa a ser “Ler transcrição”. Confira se a transcrição corresponde à gravação.
+- **Foto principal:** campo `foto` da história, por exemplo `"assets/fotos/edina-alves/apito"`, sem extensão. Ela aparece no card da aba, no topo da história e nas sugestões. Ajuste `fotoAlt` (descrição para leitores de tela), `fotoPosicao` (`"50% 30%"` = ponto da foto que fica no corte) e `fotoCredito` (crédito sob a foto; vazio não aparece).
+- **Fotos e áudios novos** passam antes pelo script de otimização (veja abaixo). Marianna Fraga ainda usa a ilustração provisória, e a página avisa isso sob a imagem.
+
+### Fotos e áudios: como adicionar ou trocar
+
+1. Coloque o original em `assets/originais/`, que fica fora do Git:
+   - fotos em `assets/originais/fotos/<id-da-historia>/<nome>.jpg` (também PNG, WebP ou TIFF; HEIC precisa ser convertido antes);
+   - um trecho de áudio por história em `assets/originais/audio/<id-da-historia>.m4a` (também MP3, WAV etc.).
+2. Rode o script. Ele precisa do `sharp` e do `ffmpeg` com `libopus`. O `sharp` fica fora do projeto, para o site continuar sem dependências:
+   ```bash
+   npm install --prefix ~/.cache/midia-reportagem sharp
+   NODE_PATH=~/.cache/midia-reportagem/node_modules node scripts/otimizar-midia.mjs
+   # se o ffmpeg não estiver no PATH: FFMPEG=/caminho/do/ffmpeg ...
+   ```
+3. Use o caminho sem extensão no `conteudo.js`: `assets/fotos/<id>/<nome>` nas fotos e `<id>` no marcador de áudio.
+
+O que o script faz:
+- **Fotos:** AVIF em 640, 800, 1080 e, nas deitadas, 1600 px, sem ampliar. Gera também um WebP de 800 px para navegadores sem AVIF. Corrige a orientação, converte para sRGB e remove os metadados, inclusive a localização GPS das fotos de celular. A qualidade 50 do AVIF foi comparada a um recorte ampliado do original e ficou igual a olho nu, com quase metade do peso da qualidade 58.
+- **Navegador:** escolhe sozinho o menor arquivo que serve. Em celulares de densidade 3, o pedido equivale a ~2× (diferença imperceptível em foto). As fotos do texto só carregam quando a leitura chega perto delas.
+- **Áudios:** uniformiza o volume em −17 LUFS, porque a gravação de Nana estava 9 dB abaixo das outras. Também tira graves de manuseio, suaviza o começo e o fim e gera Opus/WebM de 40 kbps, com AAC/M4A de 64 kbps como reserva. O player não baixa nada antes do play: a duração e o desenho da onda (o volume real do trecho) vêm do manifesto.
+- **Manifesto:** escreve `js/midia.js` com proporção, cor de fundo enquanto a foto carrega, larguras, duração e onda. Não edite esse arquivo à mão.
+- **Bordas e recortes:** a lista `RECORTES`, no início do script, remove bordas de fotos recebidas com faixa. Hoje só a foto da Copa de 2019 de Edina passa por ela.
+- **Execução incremental:** só processa originais novos ou alterados. Use `--forcar` para refazer tudo.
+
+### Por que o player toca sem o som do estádio
+O botão com o alto-falante, no alto à direita, liga e desliga só o som ambiente do estádio, que é sintetizado na hora. Os áudios das entrevistas usam um `<audio>` próprio e tocam com ele ligado ou desligado. Quando os dois tocam juntos, o ambiente abaixa sozinho. Clicar ou tocar na onda também começa a reprodução, a partir do ponto escolhido.
 - **Créditos:** `creditos` em `conteudo.js` (aparece em `#sobre`). Desenvolvimento: Caio Bezerra, com link para o GitHub. Para vincular outro crédito a uma página, use o campo opcional `link`. Orientação e instituição ainda estão vazios; os campos aparecem quando preenchidos. Agradecimentos e contato também ficam ocultos até serem definidos. O contato precisa de um e-mail válido.
 - **Textos da interface** (botões, avisos, mensagens): `interface` em `conteudo.js`.
 
 ### O que ainda depende da autora
-Fotos reais das entrevistadas; gravações e transcrições definitivas; orientação, instituição, agradecimentos e e-mail. Os retratos são ilustrações provisórias e os áudios são demonstrativos, identificados na página. Os **títulos das histórias são sugestões** tiradas do próprio texto: revise. A apresentação do Sobre e a introdução de Árbitras já estão escritas a partir da reportagem e também podem passar pela revisão editorial da autora.
+- **Créditos das fotos:** nenhum crédito foi informado. Preencha `fotoCredito` em cada história e o terceiro campo dos marcadores `[[foto:…|legenda|crédito]]` (ex.: “Arquivo pessoal”, “Fulano/CBF”).
+- **Legendas:** foram escritas a partir do que a foto mostra e do texto. Confira principalmente “Copa do Mundo Feminina de 2019, na França” (Edina, pelo patch da camisa) e “Liga das Nações de Vôlei” (Nana, pelas placas).
+- **Transcrições:** feitas com reconhecimento de fala (Whisper) e conferidas trecho a trecho. Dois pedaços pouco claros viraram (…): Marianna Fraga, depois de “profissão de artista”, em que se ouve algo como “eu tenho certeza que você tá falando…”; e Nana, depois de “Mané Mercado”, com “só tinha esse que tinha o Mané Mercado ali”. Em Carla, o trecho “Antes disso a gente tem um jogo” segue o texto da reportagem; a máquina ouviu variações como “antes a gente só tem um jogo”. Ouça e ajuste se preciso.
+- **Fotos e áudio que faltam:** não chegaram fotos de Marianna Fraga (a pasta “Marianna” é de Marianna Líbano, no Coritiba) nem o áudio de Cassia França. A história de Cassia ficou sem player; a fala continua no texto.
+- **Fotos não usadas:** a seleção evitou repetições e imagens com terceiros identificáveis ao lado de trechos sobre conflitos. Também ficaram de fora duas capturas de tela do Instagram com a interface aparecendo. Todas continuam em `auxilio_reportagem`.
+- **Grafia de Mirian:** a reportagem alterna “Miriam” (6 vezes) e “Mirian” (4); a pasta e o áudio enviados dizem “Miriam”, e o site usa “Mirian”. Confirme a grafia com a fonte.
+- **Ainda em aberto:** orientação, instituição, agradecimentos e e-mail. Os **títulos das histórias são sugestões** tiradas do próprio texto: revise. A apresentação do Sobre e a introdução de Árbitras também podem passar pela revisão editorial da autora.
 
 ### Revisão feita no texto da reportagem (`reportagem/REAL REPORTAGEM.md`)
 O texto real entrou em `conteudo.js` com correções leves. Confira e desfaça se quiser:
@@ -52,7 +84,7 @@ node scripts/preparar-publicacao.mjs
 O comando usa apenas o Node.js, não precisa de instalação e recria `dist/` com HTML, CSS, JS e os assets usados pelo site. Exclui os originais, ferramentas e documentos de trabalho. Para conferir a pasta gerada, rode `python3 -m http.server 8000 --directory dist` e acesse `http://localhost:8000`.
 
 - **Netlify:** envie `dist/` em app.netlify.com/drop ou configure o comando acima e a pasta de publicação `dist`.
-- **Vercel:** importe o repositório como site sem framework, com o comando acima e a pasta de saída `dist`.
+- **Vercel:** importe o repositório como site sem framework, com o comando acima e a pasta de saída `dist`. O `vercel.json` define o cache: imagens, fotos, áudios e ícones por 1 dia, bibliotecas por 30 dias e fontes por 1 ano. HTML, CSS, `conteudo.js` e o JS do site continuam sem cache, para as atualizações aparecerem na hora. Ao trocar uma foto, prefira um nome novo, porque quem já visitou pode ver a anterior por até um dia.
 - **GitHub Pages:** ative Pages na branch principal e na pasta raiz. `.nojekyll` desativa o processamento Jekyll. O `404.html` já funciona em subpastas. Os originais não entram no Git.
 
 Depois de publicar, troque `assets/img/og-image.jpg` nas metatags `og:image` e `twitter:image` do `index.html` pelo endereço completo (ex.: `https://seu-site.netlify.app/assets/img/og-image.jpg`).
@@ -68,6 +100,10 @@ A imagem `assets/img/og-image.jpg` já contém o título aprovado, em 1200 × 63
 - Versões grandes dos objetos não são pré-carregadas no celular ou em economia de dados.
 - Feixes dos refletores calculados no espaço local da cena, descontando o zoom. A luz acompanha a torre durante a abertura e recebe um recálculo final, sem depender de redimensionar a janela.
 - Título, metadados, imagem de compartilhamento, apresentação do Sobre e introdução de Árbitras atualizados. Créditos indefinidos ficam ocultos.
+- Fotos reais e trechos de áudio das entrevistadas, otimizados por `scripts/otimizar-midia.mjs` (veja “Fotos e áudios”).
+- Capa: atalhos “Abertura · Sobre o projeto” no alto, na altura do botão de som (antes ficavam escondidos no rodapé); botão de som com ícone de alto-falante; subtítulo com “que marcam presença”, a pedido da orientação.
+- No computador, a versão grande de cada objeto só é baixada quando a pessoa aponta para ele. Antes, as três versões em WebP (~420 KB) eram baixadas em toda visita. Agora é uma só, em AVIF.
+- Cache na Vercel pelo `vercel.json` (detalhes em “Como publicar”).
 - Resultados e limites da verificação atual em `VERIFICACAO.md`.
 
 ## O que foi feito em cada fase

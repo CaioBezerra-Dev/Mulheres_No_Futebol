@@ -14,6 +14,7 @@ export function criarCapa() {
   const kicker = $('.capa__kicker', el);
   const sub = $('.capa__apoio', el);
   const rodape = $('.capa__rodape', el);
+  const nav = $('.capa__nav', el);        // atalhos para a abertura e o Sobre, no alto da capa
   const itens = $$('.objeto-item', el);
   const objetos = $$('.objeto', el);
   let ativa = false;
@@ -165,7 +166,7 @@ export function criarCapa() {
   function prepararIntro() {
     if (!linhas.length) dividirTitulo();
     gsap.set(linhas, { yPercent: 115 });
-    gsap.set([kicker, sub, rodape], { autoAlpha: 0, y: 18 });
+    gsap.set([kicker, sub, rodape, nav], { autoAlpha: 0, y: 18 });
     gsap.set(itens, { autoAlpha: 0, scale: 0.55, y: 60 });
   }
 
@@ -173,13 +174,13 @@ export function criarCapa() {
     const tl = gsap.timeline({ onStart: ativar });
     if (reduzido) {
       gsap.set(linhas, { yPercent: 0 });
-      tl.to([kicker, sub, rodape, ...itens], { autoAlpha: 1, y: 0, scale: 1, duration: DUR.m, ease: 'none' });
+      tl.to([kicker, sub, rodape, nav, ...itens], { autoAlpha: 1, y: 0, scale: 1, duration: DUR.m, ease: 'none' });
       return tl;
     }
     tl.add(cena.intro(), 0)
       .to(kicker, { autoAlpha: 1, y: 0, duration: DUR.g, ease: EASE.saida }, 0.15)
       .to(linhas, { yPercent: 0, duration: 1.25, ease: EASE.saida, stagger: 0.11 }, 0.2)
-      .to(sub, { autoAlpha: 1, y: 0, duration: DUR.g, ease: EASE.saida }, 0.55)
+      .to([sub, nav], { autoAlpha: 1, y: 0, duration: DUR.g, ease: EASE.saida }, 0.55)
       .to(itens, { autoAlpha: 1, scale: 1, y: 0, duration: 1.1, ease: 'back.out(1.6)', stagger: 0.13 }, 0.7)
       .to(rodape, { autoAlpha: 1, y: 0, duration: DUR.g, ease: EASE.saida }, 1.1);
     return tl;
@@ -189,10 +190,10 @@ export function criarCapa() {
   function saida(objetoEl) {
     const tl = gsap.timeline();
     const outros = itens.filter(i => !i.contains(objetoEl));
-    if (reduzido) return tl.to([...outros, kicker, sub, rodape, titulo], { autoAlpha: 0, duration: DUR.p });
+    if (reduzido) return tl.to([...outros, kicker, sub, rodape, nav, titulo], { autoAlpha: 0, duration: DUR.p });
     tl.to(outros, { autoAlpha: 0, scale: 0.7, y: 30, duration: DUR.m, ease: EASE.antecipa, stagger: 0.05 }, 0)
       .to(linhas, { yPercent: -115, duration: 0.7, ease: EASE.troca, stagger: 0.05 }, 0)
-      .to([kicker, sub, rodape], { autoAlpha: 0, y: -12, duration: DUR.p }, 0)
+      .to([kicker, sub, rodape, nav], { autoAlpha: 0, y: -12, duration: DUR.p }, 0)
       .to($('.objeto__rotulo', objetoEl), { autoAlpha: 0, duration: DUR.xs }, 0);
     return tl;
   }
@@ -202,7 +203,7 @@ export function criarCapa() {
     const outros = itens.filter(i => !i.contains(objetoEl));
     gsap.set(outros, { autoAlpha: 0, scale: 0.7, y: 30 });
     gsap.set(linhas, { yPercent: 115 });
-    gsap.set([kicker, sub, rodape], { autoAlpha: 0, y: 18 });
+    gsap.set([kicker, sub, rodape, nav], { autoAlpha: 0, y: 18 });
     gsap.set($('.objeto__rotulo', objetoEl), { autoAlpha: 0 });
     gsap.set(itens.find(i => i.contains(objetoEl)), { autoAlpha: 1, scale: 1, y: 0 });
   }
@@ -210,10 +211,10 @@ export function criarCapa() {
   function entradaVolta(objetoEl) {
     const tl = gsap.timeline();
     const outros = itens.filter(i => !i.contains(objetoEl));
-    if (reduzido) return tl.to([...outros, kicker, sub, rodape, $('.objeto__rotulo', objetoEl)], { autoAlpha: 1, y: 0, scale: 1, duration: DUR.p }).set(linhas, { yPercent: 0 }, 0);
+    if (reduzido) return tl.to([...outros, kicker, sub, rodape, nav, $('.objeto__rotulo', objetoEl)], { autoAlpha: 1, y: 0, scale: 1, duration: DUR.p }).set(linhas, { yPercent: 0 }, 0);
     tl.to(linhas, { yPercent: 0, duration: 1.1, ease: EASE.saida, stagger: 0.09 }, 0.1)
       .to(outros, { autoAlpha: 1, scale: 1, y: 0, duration: 1, ease: 'back.out(1.5)', stagger: 0.1 }, 0.25)
-      .to([kicker, sub, rodape], { autoAlpha: 1, y: 0, duration: DUR.g, ease: EASE.saida }, 0.35)
+      .to([kicker, sub, rodape, nav], { autoAlpha: 1, y: 0, duration: DUR.g, ease: EASE.saida }, 0.35)
       .to($('.objeto__rotulo', objetoEl), { autoAlpha: 1, duration: DUR.m }, 0.6);
     return tl;
   }
@@ -222,7 +223,7 @@ export function criarCapa() {
   function estadoFinal() {
     if (!linhas.length) dividirTitulo();
     gsap.set(linhas, { yPercent: 0 });
-    gsap.set([kicker, sub, rodape, ...itens, ...$$('.objeto__rotulo', el)], { autoAlpha: 1, y: 0, scale: 1 });
+    gsap.set([kicker, sub, rodape, nav, ...itens, ...$$('.objeto__rotulo', el)], { autoAlpha: 1, y: 0, scale: 1 });
     objetos.forEach(o => gsap.set($('.objeto__mag', o), { clearProps: 'transform' }));
   }
 

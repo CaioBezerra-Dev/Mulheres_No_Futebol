@@ -84,8 +84,16 @@ function criarAtorEscalado(src, c, w, h, k) {
   return a;
 }
 
-/** Usa a versão 2x do objeto no ator (já pré-carregada) para não pixelar ao crescer. */
-const srcObjeto2x = (obj, fallback) => (obj ? `assets/img/objetos/${obj}-2x.webp` : fallback);
+/**
+ * Versão 2x do objeto para o ator, para não pixelar ao crescer, no mesmo formato que o
+ * navegador já usa (AVIF quando há suporte, menos da metade do WebP). Se a imagem
+ * na tela já é a 2x (celulares), reaproveita o arquivo baixado.
+ */
+export function srcObjeto2x(obj, atual = '') {
+  if (!obj) return atual;
+  if (/-2x\.(avif|webp)$/.test(atual)) return atual;
+  return `assets/img/objetos/${obj}-2x.${/\.avif$/.test(atual) ? 'avif' : 'webp'}`;
+}
 
 /** Tamanho "de layout" de um elemento (sem transformações) + centro visual. */
 function medir(el) {
@@ -240,7 +248,9 @@ export function flip({ de, para, origem, aoCobrir }) {
   const heroImg = hero.querySelector('img');
   const raioCard = parseFloat(getComputedStyle(fig).borderTopLeftRadius) || 0;
   const raioHero = parseFloat(getComputedStyle(hero).borderTopLeftRadius) || 0;
-  const ator = criarAtor(heroImg.currentSrc || heroImg.src || imgF.currentSrc, r0, { foto: true, posicao: heroImg.style.objectPosition });
+  // A foto do card já está carregada: o voo começa na hora e não baixa outro arquivo
+  // (a foto da história ainda nem escolheu qual tamanho vai usar neste momento).
+  const ator = criarAtor(imgF.currentSrc || heroImg.currentSrc || heroImg.src, r0, { foto: true, posicao: heroImg.style.objectPosition });
   gsap.set(ator, { borderRadius: raioCard });
   gsap.set(hero, { autoAlpha: 0 });
   gsap.set(fig, { autoAlpha: 0 });

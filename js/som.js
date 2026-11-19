@@ -167,7 +167,8 @@ class Som {
     b.classList.toggle('is-ligado', this.ligado);
     const rotulo = this.ligado ? t('somDesligar') : t('somLigar');
     b.setAttribute('aria-label', rotulo);
-    b.dataset.cursor = this.ligado ? 'Silenciar' : 'Ouvir';
+    // é o som ambiente do estádio; os áudios das entrevistas tocam com ele ligado ou não
+    b.dataset.cursor = this.ligado ? 'Silenciar estádio' : 'Som do estádio';
     const sr = b.querySelector('[data-rotulo-som]');
     if (sr) sr.textContent = rotulo;
   }

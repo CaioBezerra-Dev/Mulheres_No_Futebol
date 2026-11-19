@@ -1,6 +1,7 @@
 /* =============================================================================
    BASE — sistema de movimento, utilitários, estado e acesso ao conteúdo.
    ============================================================================= */
+import { FOTOS } from './midia.js';
 
 export const C = window.CONTEUDO;
 
@@ -142,11 +143,44 @@ export function sugestoes(id, n = 2) {
 
 /* ---------- Imagens ---------- */
 /**
- * Gera <picture>. Se `base` não tem extensão, usa o conjunto otimizado do site
- * (base-1x/2x .avif/.webp). Se tem extensão (foto real), usa o arquivo direto.
+ * Largura em que cada foto aparece, para o navegador baixar só o arquivo necessário.
+ * Em celulares com densidade 3x, o pedido equivale a ~2x: em foto a diferença
+ * não aparece, e o download cai quase pela metade.
  */
-export function imagem(base, { alt = '', classe = '', lazy = true, prioridade = '', largura, altura, estilo = '' } = {}) {
-  const attrs = `${classe ? ` class="${classe}"` : ''} alt="${esc(alt)}"${lazy ? ' loading="lazy"' : ''} decoding="async"${prioridade ? ` fetchpriority="${prioridade}"` : ''}${largura ? ` width="${largura}"` : ''}${altura ? ` height="${altura}"` : ''}${estilo ? ` style="${esc(estilo)}"` : ''}`;
+const CELULAR_DENSO = '(max-width: 760px) and (-webkit-min-device-pixel-ratio: 2.5)';
+export const TAMANHOS = {
+  card: `${CELULAR_DENSO} 58vw, (max-width: 760px) 88vw, (max-width: 1000px) 46vw, 36vw`,
+  hero: `${CELULAR_DENSO} 60vw, (max-width: 760px) 90vw, (max-width: 1000px) 48vw, 40vw`,
+  texto: `${CELULAR_DENSO} 60vw, (max-width: 760px) 90vw, (max-width: 1000px) 86vw, 900px`,
+  textoVertical: `${CELULAR_DENSO} 60vw, (max-width: 760px) 90vw, 560px`,
+  miniatura: '(max-width: 760px) 84px, 160px',
+  // foto deitada numa moldura em pé (card e topo da história): o corte usa a altura,
+  // então a imagem desenhada fica bem mais larga que a moldura
+  cardDeitada: `${CELULAR_DENSO} 100vw, (max-width: 760px) 160vw, (max-width: 1000px) 88vw, 68vw`,
+  heroDeitada: `${CELULAR_DENSO} 100vw, (max-width: 760px) 150vw, (max-width: 1000px) 100vw, 84vw`,
+};
+/** Tamanho para fotos recortadas em moldura em pé, conforme a orientação da foto. */
+export const tamanhosMoldura = (base, tipo) => (FOTOS[base] && FOTOS[base].l > FOTOS[base].a ? TAMANHOS[`${tipo}Deitada`] : TAMANHOS[tipo]);
+
+/** Dados da foto otimizada (proporção, larguras, cor de fundo), ou undefined. */
+export const infoFoto = base => FOTOS[base];
+
+/**
+ * Gera <picture>.
+ * - Foto real otimizada (caminho sem extensão em js/midia.js): AVIF em várias larguras,
+ *   WebP de reserva, proporção reservada e cor de fundo enquanto carrega.
+ * - Outro caminho sem extensão: conjunto ilustrado do site (base-1x/2x .avif/.webp).
+ * - Caminho com extensão: usa o arquivo direto.
+ */
+export function imagem(base, { alt = '', classe = '', lazy = true, prioridade = '', largura, altura, estilo = '', tamanhos = '100vw' } = {}) {
+  const foto = FOTOS[base];
+  const css = (foto ? `background-color:${foto.cor};` : '') + estilo;
+  const l = largura || foto?.l, a = altura || foto?.a;
+  const attrs = `${classe ? ` class="${classe}"` : ''} alt="${esc(alt)}"${lazy ? ' loading="lazy"' : ''} decoding="async"${prioridade ? ` fetchpriority="${prioridade}"` : ''}${l ? ` width="${l}"` : ''}${a ? ` height="${a}"` : ''}${css ? ` style="${esc(css)}"` : ''}`;
+  if (foto) {
+    const srcset = foto.avif.map(w => `${base}-${w}.avif ${w}w`).join(', ');
+    return `<picture><source type="image/avif" srcset="${esc(srcset)}" sizes="${esc(tamanhos)}"><img src="${esc(`${base}-${foto.webp}.webp`)}"${attrs}></picture>`;
+  }
   if (/\.(jpe?g|png|webp|avif|gif)$/i.test(base)) {
     return `<picture><img src="${esc(base)}"${attrs}></picture>`;
   }
