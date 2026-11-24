@@ -4,7 +4,7 @@
    (vazio = capa; qualquer outra coisa = 404 temática)
    ============================================================================= */
 import {
-  C, $, $$, EASE, DUR, t, esc, caminho, categorias, categoria, historia, estado,
+  C, $, $$, EASE, DUR, t, esc, caminho, categorias, categoria, historia, estado, IDS_ANTIGOS,
   movimentoReduzido, ehToque, anunciar, objetoPicture, aguardar, carregarImagem, dividirLinhas,
 } from './base.js';
 import { iniciarPreloader } from './preloader.js';
@@ -21,7 +21,10 @@ export function lerRota(hash = window.location.hash) {
   if (!h || h === 'capa') return { tipo: 'capa' };
   if (categoria(h)) return { tipo: 'categoria', id: h };
   const m = h.match(/^historia\/([\w-]+)$/);
-  if (m) return historia(m[1]) ? { tipo: 'historia', id: m[1] } : { tipo: '404' };
+  if (m) {
+    const id = IDS_ANTIGOS[m[1]] || m[1];
+    return historia(id) ? { tipo: 'historia', id } : { tipo: '404' };
+  }
   if (h === 'sobre') return { tipo: 'sobre' };
   if (h === 'abertura') return { tipo: 'abertura' };
   return { tipo: '404' };

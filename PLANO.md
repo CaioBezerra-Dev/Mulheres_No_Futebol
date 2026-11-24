@@ -13,7 +13,7 @@ Sobre o gramado flutuam três objetos de trabalho, as ferramentas de quem ocupa 
 
 | Objeto | Leva para | Histórias |
 | --- | --- | --- |
-| Microfone | **As Jornalistas** (`#jornalistas`) | Carla Pessoa, Nana Ednet, Marianna Fraga |
+| Microfone | **As Jornalistas** (`#jornalistas`) | Carla Pessoa, Nana Ednet, Mariana Fraga |
 | Apito | **As Árbitras** (`#arbitras`) | Edina Alves, Cassia França |
 | Caderneta | **As Gestoras** (`#gestoras`) | Mirian Monte, Marianna Líbano |
 

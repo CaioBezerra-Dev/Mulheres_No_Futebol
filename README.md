@@ -12,7 +12,7 @@
 
 A experiência começa em um estádio à noite. Sobre o gramado, três objetos abrem caminhos para conhecer as entrevistadas:
 
-- **[As Jornalistas](https://mulheres-no-futebol.vercel.app/#jornalistas)** · O microfone leva às histórias de **Carla Pessoa, Nana Ednet e Marianna Fraga**.
+- **[As Jornalistas](https://mulheres-no-futebol.vercel.app/#jornalistas)** · O microfone leva às histórias de **Carla Pessoa, Nana Ednet e Mariana Fraga**.
 - **[As Árbitras](https://mulheres-no-futebol.vercel.app/#arbitras)** · O apito apresenta as trajetórias de **Edina Alves e Cassia França**.
 - **[As Gestoras](https://mulheres-no-futebol.vercel.app/#gestoras)** · A caderneta abre os bastidores da gestão com **Mirian Monte e Marianna Líbano**.
 

@@ -1,3 +1,19 @@
+# Verificação — 24/11/2026: fotos de Mariana Fraga, áudio de Cassia e grafia das Marianas
+
+## O que mudou
+- Mariana Fraga ganhou 5 fotos reais: a foto principal (estádio à noite, no Chile) e 4 no meio do texto (infância, beira do gramado, estúdio do Globo Esporte e Chile). A ilustração provisória saiu do site.
+- Cassia França ganhou o player, logo depois da fala “Na minha federação era muito difícil…”, com o trecho de 45 s e a transcrição.
+- A grafia segue as pastas enviadas: **Mariana Fraga** (um “n”) e **Marianna Líbano** (dois “n”). O endereço passou a ser `#historia/mariana-fraga`, e o antigo `#historia/marianna-fraga` continua abrindo a história, inclusive com a marcação de “lida” preservada.
+- Peso novo no deploy: 1,0 MB das fotos (todas as larguras) e 0,6 MB do áudio (Opus + AAC). Saíram 332 KB da ilustração provisória. Quem lê a história de Mariana no celular baixa cerca de 190 KB de fotos, e só conforme rola.
+
+## Verificações realizadas (Chrome headless)
+- História de Mariana Fraga em 1440 px e 390 px: as 5 fotos carregam, nenhum “Marianna” no texto, nenhum erro de console ou de rede.
+- Player de Cassia: toca o `cassia-franca.webm`, com duração de 45,2 s.
+- Link antigo `#historia/marianna-fraga` abre a história de Mariana Fraga, e a leitura salva com o id antigo conta como lida.
+- Todas as fotos e áudios citados em `conteudo.js` existem no manifesto, e nenhum arquivo do manifesto ficou sem uso. `node --check` em todos os módulos.
+
+---
+
 # Verificação — 19/11/2026: fotos, áudios e ajustes da capa
 
 ## O que mudou

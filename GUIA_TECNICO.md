@@ -28,7 +28,7 @@ Tudo que aparece escrito no site está em **`conteudo.js`**. Edite só o que est
   - `[[foto:assets/fotos/carla-pessoa/infancia|legenda|crédito]]` insere uma foto no meio do texto. O crédito é opcional e aparece sob a legenda. Fotos em pé ficam centralizadas e limitadas pela altura da tela.
   - `## Intertítulo` insere um subtítulo.
 - **Foto principal:** campo `foto` da história, por exemplo `"assets/fotos/edina-alves/apito"`, sem extensão. Ela aparece no card da aba, no topo da história e nas sugestões. Ajuste `fotoAlt` (descrição para leitores de tela), `fotoPosicao` (`"50% 30%"` = ponto da foto que fica no corte) e `fotoCredito` (crédito sob a foto; vazio não aparece).
-- **Fotos e áudios novos** passam antes pelo script de otimização (veja abaixo). Marianna Fraga ainda usa a ilustração provisória, e a página avisa isso sob a imagem.
+- **Fotos e áudios novos** passam antes pelo script de otimização (veja abaixo). As sete histórias já usam fotos reais; se uma foto principal apontar para `assets/img/retratos/`, a página avisa sob a imagem que é uma ilustração provisória.
 
 ### Fotos e áudios: como adicionar ou trocar
 
@@ -59,10 +59,10 @@ O botão com o alto-falante, no alto à direita, liga e desliga só o som ambien
 ### O que ainda depende da autora
 - **Créditos das fotos:** nenhum crédito foi informado. Preencha `fotoCredito` em cada história e o terceiro campo dos marcadores `[[foto:…|legenda|crédito]]` (ex.: “Arquivo pessoal”, “Fulano/CBF”).
 - **Legendas:** foram escritas a partir do que a foto mostra e do texto. Confira principalmente “Copa do Mundo Feminina de 2019, na França” (Edina, pelo patch da camisa) e “Liga das Nações de Vôlei” (Nana, pelas placas).
-- **Transcrições:** feitas com reconhecimento de fala (Whisper) e conferidas trecho a trecho. Dois pedaços pouco claros viraram (…): Marianna Fraga, depois de “profissão de artista”, em que se ouve algo como “eu tenho certeza que você tá falando…”; e Nana, depois de “Mané Mercado”, com “só tinha esse que tinha o Mané Mercado ali”. Em Carla, o trecho “Antes disso a gente tem um jogo” segue o texto da reportagem; a máquina ouviu variações como “antes a gente só tem um jogo”. Ouça e ajuste se preciso.
-- **Fotos e áudio que faltam:** não chegaram fotos de Marianna Fraga (a pasta “Marianna” é de Marianna Líbano, no Coritiba) nem o áudio de Cassia França. A história de Cassia ficou sem player; a fala continua no texto.
-- **Fotos não usadas:** a seleção evitou repetições e imagens com terceiros identificáveis ao lado de trechos sobre conflitos. Também ficaram de fora duas capturas de tela do Instagram com a interface aparecendo. Todas continuam em `auxilio_reportagem`.
-- **Grafia de Mirian:** a reportagem alterna “Miriam” (6 vezes) e “Mirian” (4); a pasta e o áudio enviados dizem “Miriam”, e o site usa “Mirian”. Confirme a grafia com a fonte.
+- **Transcrições:** feitas com reconhecimento de fala (Whisper) e conferidas trecho a trecho. Dois pedaços pouco claros viraram (…): Mariana Fraga, depois de “profissão de artista”, em que se ouve algo como “eu tenho certeza que você tá falando…”; e Nana, depois de “Mané Mercado”, com “só tinha esse que tinha o Mané Mercado ali”. Em Carla, o trecho “Antes disso a gente tem um jogo” segue o texto da reportagem; a máquina ouviu variações como “antes a gente só tem um jogo”. Ouça e ajuste se preciso. A transcrição de Cassia foi conferida de ouvido em 24/11/2026: “se você fizer um bom trabalho”, “porque ainda era um pouco mais machista” (sem “eu”) e “na árbitra central” estão como ela fala.
+- **Grafia das Marianas:** segue o nome das pastas enviadas: **Mariana Fraga** (um “n”, endereço `#historia/mariana-fraga`) e **Marianna Líbano** (dois “n”). O endereço antigo `#historia/marianna-fraga` continua abrindo a história (lista `IDS_ANTIGOS` em `js/base.js`). O texto original em `reportagem/REAL REPORTAGEM.md` foi preservado com a grafia recebida.
+- **Fotos não usadas:** a seleção evitou repetições e imagens com terceiros identificáveis ao lado de trechos sobre conflitos. Também ficaram de fora duas capturas de tela do Instagram com a interface aparecendo. De Mariana Fraga, entraram 5 das 10 fotos; ficaram de fora a segunda foto de infância, a da estátua de Maradona, a do visor da câmera e as duas gravações de basquete (de máscara). Todas continuam em `auxilio_reportagem` e no pacote do Drive.
+- **Grafia de Mirian:** confirmada como **Mirian**, com “n” (24/11/2026). A reportagem alternava “Miriam” e “Mirian”, e a pasta enviada diz “Miriam”; o site usa “Mirian” em todo lugar.
 - **Ainda em aberto:** orientação, instituição, agradecimentos e e-mail. Os **títulos das histórias são sugestões** tiradas do próprio texto: revise. A apresentação do Sobre e a introdução de Árbitras também podem passar pela revisão editorial da autora.
 
 ### Revisão feita no texto da reportagem (`reportagem/REAL REPORTAGEM.md`)
@@ -71,7 +71,7 @@ O texto real entrou em `conteudo.js` com correções leves. Confira e desfaça s
 - Padronização: **Miriam → Mirian** (como no título da seção) e **Libano → Líbano**; "série A/B" → "Série A/B"; "Metrópolis" → **Metrópoles** (nome do portal).
 - Pequenos ajustes de frase: "há cerca de quase 2 anos" → "há quase dois anos"; "tentaram a impedir" → "tentaram impedi-la"; "segue estabelecendo com uma barreira" → "segue estabelecendo uma barreira"; "Série D e C" → "Séries D e C".
 - **Ano corrigido:** o credenciamento de Edina Alves é de **2016**, conforme o [cadastro oficial da FIFA](https://inside.fifa.com/es/associations/BRA/referees). O original da reportagem foi preservado; a correção está em `conteudo.js`.
-- **Verificar com a fonte:** Marianna Fraga: cirurgia no fim de 2021 e contratação “poucos meses” depois, no início de 2023. A cronologia foi mantida aguardando confirmação.
+- **Verificar com a fonte:** Mariana Fraga: cirurgia no fim de 2021 e contratação “poucos meses” depois, no início de 2023. A cronologia foi mantida aguardando confirmação.
 
 ## Como publicar
 
