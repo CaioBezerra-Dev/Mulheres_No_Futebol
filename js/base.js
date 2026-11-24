@@ -71,9 +71,12 @@ function gravar(chave, valor) {
   try { window.localStorage.setItem(chave, JSON.stringify(valor)); } catch { /* modo privado ou cheio: segue só na memória */ }
 }
 
+// Histórias que mudaram de endereço: links já compartilhados e leituras salvas seguem valendo.
+export const IDS_ANTIGOS = { 'marianna-fraga': 'mariana-fraga' };
+
 const ouvintesLidas = new Set();
 export const estado = {
-  lidas() { const l = ler(CHAVE_LIDAS, []); return new Set(Array.isArray(l) ? l : []); },
+  lidas() { const l = ler(CHAVE_LIDAS, []); return new Set(Array.isArray(l) ? l.map(id => IDS_ANTIGOS[id] || id) : []); },
   foiLida(id) { return this.lidas().has(id); },
   marcarLida(id) {
     const l = this.lidas();
